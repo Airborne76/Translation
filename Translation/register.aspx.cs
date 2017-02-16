@@ -17,12 +17,22 @@ namespace Translation
 
         protected void userRegister_Click(object sender, EventArgs e)
         {
-            string sqlStr = "insert into userinfo(username,password)";
-            sqlStr += "values('"+username.Text+"','"+password1.Text+"')";
+            string sqlInsertStr ="insert into userinfo(username,password)";
+            sqlInsertStr += $"values('{ username.Text }','{ password1.Text }')";
+            //试试C#6语法
+            string sqlSelectStr = $"select count(*) from userinfo where username='{username.Text}' and password='{password1.Text}'";
+
             if (password1.Text == password2.Text)
             {
-                string i=Convert.ToString(SQLHelper.GetExecuteNonQuery(sqlStr));
-                Label4.Text = i;
+                if (Convert.ToInt16(SQLHelper.GetExecuteScalar(sqlSelectStr)) == 0)
+                {
+                    string i = Convert.ToString(SQLHelper.GetExecuteNonQuery(sqlInsertStr));
+                    Label4.Text = i;
+                }
+                else
+                {
+                    Label4.Text = "用户名已存在";
+                }
             }
         }
 

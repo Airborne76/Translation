@@ -16,7 +16,7 @@ namespace Translation
         }
         protected void login_Click(object sender, EventArgs e)
         {
-            string sqlStr="select count(*) from userinfo where username='"+username.Text +"' and password='"+password.Text+"'";
+            string sqlStr=$"select count(*) from userinfo where username='{username.Text }' and password='{password.Text}'";
             string i = Convert.ToString(SQLHelper.GetExecuteScalar(sqlStr));
             Label1.Text = i;
         }

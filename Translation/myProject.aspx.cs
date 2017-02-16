@@ -21,15 +21,21 @@ namespace Translation
         {
             if (FileUpload1.HasFile)
             {
-                string filePath = Server.MapPath("File/") + DateTime.Now.Year+ DateTime.Now.Month+ DateTime.Now.Day+ DateTime.Now.Hour+ DateTime.Now.Minute+ DateTime.Now.Second + FileUpload1.FileName;
+                string datetime = "" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second;
+                string filePath = Server.MapPath("File/") + datetime + FileUpload1.FileName;
                 FileUpload1.SaveAs(filePath);
                 string JSONString = fileHelper.FileStreamReader(filePath);
+                string sqlInsert;
                 JArray ja = JSONHelper.DeserializeJSON(JSONString);
-                string s="";
-               for(int i = 0; i < ja.Count; i++)
+                //测试用
+                //坑了我一晚上
+                string s = "";
+                for (int i = 0; i < ja.Count; i++)
                 {
                     JObject o = (JObject)ja[i];
-                    s += "KEY:" +o["key"].ToString();
+                    sqlInsert = $"insert into textinfo(Id,[key],text,projectname) values('{datetime+i}','{o["key"].ToString()}','{ o["text"].ToString()}','{ProjectName.Text}')";
+                    SQLHelper.GetExecuteNonQuery(sqlInsert);
+                    s += "KEY:" + o["key"].ToString();
                     s += "TEXT:" + o["text"].ToString();
                 }
                 Label1.Text = s;

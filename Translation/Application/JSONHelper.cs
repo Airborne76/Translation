@@ -11,11 +11,11 @@ namespace Translation.Application
 
         //}
         //JSON反序列化
-       public static JArray DeserializeJSON(string JSONString)
+        public static JArray DeserializeJSON(string JSONString)
         {
-            // JObject jObj = JObject.Parse(JSONString);
             JArray ja = (JArray)JsonConvert.DeserializeObject(JSONString);
             return ja;
+
         }
     }
 }

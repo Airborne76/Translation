@@ -2,6 +2,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:Label ID="Label2" runat="server" Text="项目名:"></asp:Label>
+    <asp:TextBox ID="ProjectName" runat="server"></asp:TextBox>
+    <br />
     <asp:FileUpload ID="FileUpload1" runat="server" />
     <br />
     <asp:Button ID="upload" runat="server" OnClick="upload_Click" Text="上传文件" />
