@@ -16,6 +16,7 @@ namespace Translation.Application
         }
         private static SqlConnection conn = new SqlConnection();
         private static SqlCommand cmd = new SqlCommand();
+        private static SqlDataAdapter da = new SqlDataAdapter();
         //连接关闭数据库
         public static void OpenConnection()
         {
@@ -35,7 +36,7 @@ namespace Translation.Application
             }
             
         }
-        //查询数据库,返回返回结果
+        //查询数据库,返回返回结果(用于select)
         public static object GetExecuteScalar(string sqlStr)
         {
             OpenConnection();
@@ -45,7 +46,7 @@ namespace Translation.Application
             CloseConnection();
             return result;
         }
-        //查询数据库,返回返回个数
+        //查询数据库,返回返回个数(用于insert,update,delete)
         public static int GetExecuteNonQuery(string sqlStr)
         {
             OpenConnection();
@@ -55,9 +56,22 @@ namespace Translation.Application
             CloseConnection();
             return result;
         }
+        //返回DataTable
+        public static DataTable GetDataTable(string sqlStr)
+        {
+            OpenConnection();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = sqlStr;
+            da.SelectCommand = cmd;
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            CloseConnection();
+            return dt;
+            
+        }
 
 
-        //string sqlStr = "Data Source = 2012-20130910SA\\SQLEXPRESS;Initial Catalog = TRDB; Integrated Security = True; Connect Timeout = 15; Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+
 
     }
 }

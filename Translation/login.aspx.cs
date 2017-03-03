@@ -18,7 +18,11 @@ namespace Translation
         {
             string sqlStr=$"select count(*) from userinfo where username='{username.Text }' and password='{password.Text}'";
             string i = Convert.ToString(SQLHelper.GetExecuteScalar(sqlStr));
+            Response.Cookies["username"].Value = username.Text;
+            Response.Cookies["username"].Expires = DateTime.Now.AddDays(1);
+
             Label1.Text = i;
+
         }
     }
 }

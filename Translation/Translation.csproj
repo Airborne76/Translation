@@ -83,6 +83,7 @@
   <ItemGroup>
     <Content Include="login.aspx" />
     <AdditionalFiles Include="register.aspx" />
+    <Content Include="projectView.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +111,13 @@
     </Compile>
     <Compile Include="myProject.aspx.designer.cs">
       <DependentUpon>myProject.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="projectView.aspx.cs">
+      <DependentUpon>projectView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="projectView.aspx.designer.cs">
+      <DependentUpon>projectView.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="register.aspx.cs">
