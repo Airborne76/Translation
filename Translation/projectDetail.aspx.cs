@@ -9,19 +9,15 @@ using Translation.Application;
 
 namespace Translation
 {
-    public partial class projectView : System.Web.UI.Page
+    public partial class projectDetail : System.Web.UI.Page
     {
-        public string getUrl(string projectId)
-        {
-            return $"projectDetail.aspx?projectId={projectId }";
-
-        }
+        string projectId;
         protected void Page_Load(object sender, EventArgs e)
         {
+            projectId = Request.QueryString["projectId"];
             if (!IsPostBack)
                 Data_Binding();
         }
-        //当前分页索引
         private int CurrentPage
         {
             get
@@ -40,13 +36,12 @@ namespace Translation
                 this.ViewState["CurrentPage"] = value;
             }
         }
-        //数据绑定
         private void Data_Binding()
         {
             PagedDataSource pd = new PagedDataSource();
             if (ViewState["DataSource"] == null)
             {
-                string sql = "select projectId,projectname,username,createtime from projectinfo";
+                string sql = $"select [key],text from textinfo where projectId='{projectId}'";
                 ViewState["DataSource"] = SQLHelper.GetDataTable(sql);
             }
             pd.DataSource = ((DataTable)ViewState["DataSource"]).DefaultView;

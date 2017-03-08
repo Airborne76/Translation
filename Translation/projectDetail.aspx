@@ -1,30 +1,24 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/main.Master" AutoEventWireup="true" CodeBehind="projectView.aspx.cs" Inherits="Translation.projectView" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/main.Master" AutoEventWireup="true" CodeBehind="projectDetail.aspx.cs" Inherits="Translation.projectDetail" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:Repeater ID="Repeaterprojects" runat="server">
+     <asp:Repeater ID="Repeaterprojects" runat="server">
         <HeaderTemplate>
             <table>
                 <tr>
-                    <th>projectname
+                    <th>key
                     </th>
-                    <th>username
-                    </th>
-                    <th>createtime
-                    </th>
+                    <th>text
+                    </th>                   
                 </tr>
         </HeaderTemplate>
         <ItemTemplate>
             <tr>
-                <td>                 
-                  <a runat="server" href='<%# getUrl(Eval("projectId").ToString())  %>'><%# Eval("projectname") %></a>  
+                <td>
+                    <%# Eval("key") %>
                 </td>
                 <td>
-                    <%# Eval("username") %>
-                </td>
-                <td>
-                    <%# Eval("createtime") %>
+                    <%# Eval("text") %>
                 </td>
             </tr>
         </ItemTemplate>
@@ -36,8 +30,5 @@
         <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
         <asp:Button ID="ButtonPrevious" runat="server" Text="后一页" OnClick="ButtonPrevious_Click" />
         <asp:Button ID="ButtonNext" runat="server" Text="前一页" OnClick="ButtonNext_Click" />
-
-        
-
     </div>
 </asp:Content>
