@@ -14,6 +14,12 @@
         th,td{
             border:1px solid aqua;
         }
+        .textBlock{
+            border:1px solid grey;
+        }
+        .hidden{
+            display:none;
+        }
     </style>
 
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -21,6 +27,11 @@
 </head>
 <body>
     <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server">
+            <Services>
+                <asp:ServiceReference Path="~/WebService1.asmx" />
+            </Services>
+        </asp:ScriptManager>
         <div>
             <div>
                 <a runat="server" href="~/projectView.aspx">项目浏览</a>

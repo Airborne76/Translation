@@ -11,6 +11,7 @@ namespace Translation
 {
     public partial class projectDetail : System.Web.UI.Page
     {
+        
         string projectId;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -41,7 +42,14 @@ namespace Translation
             PagedDataSource pd = new PagedDataSource();
             if (ViewState["DataSource"] == null)
             {
-                string sql = $"select [key],text from textinfo where projectId='{projectId}'";
+                //查询已翻译的 
+                //select [key],text,username,translatedText,updateTime from textinfo　left join　translation on  (translation.textId is null) where projectId='201722421213darkestdungeon';
+                //查询所有的
+                //select [key],text,username,translatedText,updateTime from textinfo　left join　translation on  (translation.textId=textinfo.textId) where projectId='201722421213darkestdungeon';
+                //查询未翻译的
+                //select [key],text,username,translatedText,updateTime from textinfo　left join　translation on  (translation.textId=textinfo.textId) where projectId='201722421213darkestdungeon' and translation.textId is null;
+                //string sql = $"select [key],text from textinfo where projectId='{projectId}'";
+                string sql = $"select[key],textinfo.textId,text,username,translatedText,updateTime from textinfo left join translation on(translation.textId = textinfo.textId) where projectId = '{projectId}'";
                 ViewState["DataSource"] = SQLHelper.GetDataTable(sql);
             }
             pd.DataSource = ((DataTable)ViewState["DataSource"]).DefaultView;
@@ -65,6 +73,12 @@ namespace Translation
         {
             CurrentPage += 1;
             Data_Binding();
+        }
+
+        protected void Submit(object sender, CommandEventArgs e)
+        {
+            var i = e.CommandArgument;
+            
         }
     }
 }
