@@ -107,6 +107,7 @@
       <DependentUpon>main.Master</DependentUpon>
     </Compile>
     <Compile Include="model\JSONData.cs" />
+    <Compile Include="model\translationInfo.cs" />
     <Compile Include="myProject.aspx.cs">
       <DependentUpon>myProject.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

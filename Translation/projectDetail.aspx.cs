@@ -43,7 +43,7 @@ namespace Translation
             if (ViewState["DataSource"] == null)
             {
                 //查询已翻译的 
-                //select [key],text,username,translatedText,updateTime from textinfo　left join　translation on  (translation.textId is null) where projectId='201722421213darkestdungeon';
+                //select [key],text,username,translatedText,updateTime from textinfo　left join　translation on  (translation.textId = textinfo.textId) where projectId='201722421213darkestdungeon' and translatedText is not null;
                 //查询所有的
                 //select [key],text,username,translatedText,updateTime from textinfo　left join　translation on  (translation.textId=textinfo.textId) where projectId='201722421213darkestdungeon';
                 //查询未翻译的

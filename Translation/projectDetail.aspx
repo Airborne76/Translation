@@ -4,42 +4,10 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:Repeater ID="Repeaterprojects" runat="server">
-        <%--<HeaderTemplate>
-            <table>
-                <tr>
-                    <th>key
-                    </th>
-                    <th>text
-                    </th>
-                </tr>
-        </HeaderTemplate>
-        <ItemTemplate>
-            <tr>
-                <td>
-                    <%# Eval("key") %>
-                </td>
-                <td>
-                    <%# Eval("text") %>
-                </td>
-
-                <td>
-                    <%# Eval("username") %>
-                </td>
-                <td>
-                    <%# Eval("translatedText") %>
-                </td>
-                <td>
-                    <%# Eval("updateTime") %>
-                </td>
-            </tr>
-        </ItemTemplate>
-        <FooterTemplate>
-            </table>
-        </FooterTemplate>--%>
         <ItemTemplate>
             <div class="textBlock">
                 <div>
-                    
+
                     <span>key:</span>
                     <span><%# Eval("key") %></span>
                 </div>
@@ -54,8 +22,7 @@
                 </div>
                 <div>
                     <input id="Text1" type="text" />
-                    <%--<asp:Button ID="Button" runat="server" Text="Button"   CommandArgument='<%# Eval("textId") %>' OnCommand="Submit"/>--%>
-                    <input id="Button1" type="button" value="button"  onclick="submitText(this)"/>
+                    <input id="Button1" type="button" value="button" onclick="submitText(this)" />
                     <span class="hidden"><%# Eval("textId")%></span>
                 </div>
             </div>
@@ -65,23 +32,44 @@
     <script>
         function submitText(dom) {
             var username = getCookie("username");
-            var text = dom.previousSibling.previousSibling.value;
+            var text = dom.previousSibling.previousSibling.value.replace(/(^\s*)|(\s*$)/g, "");
             var textId = dom.nextSibling.nextSibling.innerHTML;
-            var d =new Date();
+            var d = new Date();
             var timeNow = d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
-            Translation.WebService1.Submit(username,text,textId,timeNow,function (result) {
-                console.log(result);
-            }, function () {
-                console.log("error");
+            if (text != "") {
+                Translation.WebService1.Submit(username, text, textId, timeNow, function (result) {
+                    if (result == undefined) {
+                        console.log("error");
+                    } else {
+                        showTranslationInfo(dom, result.Username, result.Text, result.Time);
+                    }
+                    //console.log(result);
+                }, function () {
+                    console.log("error");
+                }
+                                );
             }
-                );
+            else {
+                alert("请填写译文");
+            }
+
         }
+
         function getCookie(name) {
             var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
             if (arr = document.cookie.match(reg))
                 return unescape(arr[2]);
             else
                 return null;
+        }
+
+        function showTranslationInfo(dom, username, text, time) {
+            var translatedTextElement = dom.parentNode.previousSibling.previousSibling.childNodes[1];
+            var usernameElement = translatedTextElement.nextSibling.nextSibling;
+            var updateTimeElement = usernameElement.nextSibling.nextSibling;
+            translatedTextElement.innerHTML = text;
+            usernameElement.innerHTML = username;
+            updateTimeElement.innerHTML = time;
         }
     </script>
     <div>
