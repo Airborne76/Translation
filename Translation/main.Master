@@ -20,6 +20,9 @@
         .hidden{
             display:none;
         }
+        .show{
+            display:inline-block;
+        }
     </style>
 
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -35,9 +38,9 @@
         <div>
             <div>
                 <a runat="server" href="~/projectView.aspx">项目浏览</a>
-                <a runat="server" href="#">新建项目</a>
                 <a runat="server" href="~/myProject.aspx">我的项目</a>
-                <a runat="server" href="~/login.aspx">登录</a>
+                <asp:HyperLink ID="login" runat="server" NavigateUrl="~/login.aspx">登录</asp:HyperLink>
+                <asp:Label ID="user" runat="server" Text=""></asp:Label>
                 <a runat="server" href="~/register.aspx">注册</a>
             </div>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">

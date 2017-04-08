@@ -16,23 +16,26 @@ namespace Translation
         string username;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.Cookies["username"] == null)
-            {
-                Response.Redirect("login.aspx");
-            }
-            else if (!IsPostBack)
-            {
-                username = Request.Cookies["username"].Value;
-                usermsg.Text = username;
-                Data_Binding();
-            }
+            //if (Request.Cookies["username"] == null)
+            //{
+            //    Response.Redirect("login.aspx");
+            //}
+            //else if (!IsPostBack)
+            //{
+            //    username = Request.Cookies["username"].Value;
+            //    usermsg.Text = username;
+            //    Data_Binding();
+            //}
+            username = User.Identity.Name;
+            Data_Binding();
+            usermsg.Text = username;
         }
         //显示进度
         public string showRate(string projectId)
         {
             string sqlAllStr = $"select count([key])from textinfo left join translation on (translation.textId = textinfo.textId) where projectId = '{projectId}' ";
-            string sqlTranslatedStr = $"select count([key]) from textinfo left join translation on (translation.textId = textinfo.textId) where projectId = '{projectId}' and translatedText is not null";           
-            string rate = ((double)result(sqlTranslatedStr)/ result(sqlAllStr)).ToString("0.00%");
+            string sqlTranslatedStr = $"select count([key]) from textinfo left join translation on (translation.textId = textinfo.textId) where projectId = '{projectId}' and translatedText is not null";
+            string rate = ((double)result(sqlTranslatedStr) / result(sqlAllStr)).ToString("0.00%");
             return rate;
         }
         int result(string str)
@@ -58,6 +61,35 @@ namespace Translation
             {
                 this.ViewState["CurrentPage"] = value;
             }
+        }
+        public string hasProject(string element)
+        {
+            string sqlcount = $"select count(*) from projectinfo where username='{username}'";
+            int i = Convert.ToInt16(SQLHelper.GetExecuteScalar(sqlcount));            
+            if (element=="bind")
+            {
+                if (i == 0)
+                {
+                    return "hidden";
+                }
+                else
+                {
+                    return "show";
+                }
+            }
+            if (element == "tip")
+            {
+                if (i == 0)
+                {
+                    return "show";
+                }
+                else
+                {
+                    return "hidden";
+                }
+            }
+            return null;
+
         }
 
         //数据绑定
@@ -106,7 +138,7 @@ namespace Translation
                 string s = "";
                 //预留username
                 //projectId以时间+项目名
-                sqlInsert = $"insert into projectinfo(projectId,projectname,username,createtime) values('{datetime + ProjectName.Text}','{ProjectName.Text}','{Request.Cookies["username"].Value}','{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}')";
+                sqlInsert = $"insert into projectinfo(projectId,projectname,username,createtime) values('{datetime + ProjectName.Text}','{ProjectName.Text}','{username}','{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}')";
                 SQLHelper.GetExecuteNonQuery(sqlInsert);
                 for (int i = 0; i < ja.Count; i++)
                 {
