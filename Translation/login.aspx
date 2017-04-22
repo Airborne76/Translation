@@ -6,12 +6,10 @@
         <asp:Label ID="Label3" runat="server" Text="用户名:"></asp:Label>
         
         <asp:TextBox ID="usernameTxt" runat="server"  autocomplete="off"></asp:TextBox>
-&nbsp;<br />
-        
-        <asp:Label ID="Label2" runat="server" Text="密码:  "></asp:Label>
-        
-        <asp:TextBox ID="password" runat="server"></asp:TextBox>
-&nbsp;<br />
+<br />    
+        <asp:Label ID="Label2" runat="server" Text="密码:  "></asp:Label>      
+        <asp:TextBox ID="passwordTxt" runat="server" TextMode="Password"></asp:TextBox>
+<br />
         <asp:Button ID="login" runat="server" OnClick="login_Click" Text="登录" />
         <br />
         <asp:Label ID="Label1" runat="server" Text="result"></asp:Label>

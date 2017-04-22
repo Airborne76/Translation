@@ -13,9 +13,16 @@ namespace Translation.Application
         //JSON反序列化
         public static JArray DeserializeJSON(string JSONString)
         {
-            JArray ja = (JArray)JsonConvert.DeserializeObject(JSONString);
-            return ja;
+            try
+            {
+                JArray ja = (JArray)JsonConvert.DeserializeObject(JSONString);
+                return ja;
+            }
+            catch (System.Exception)
+            {
 
+                return null;
+            }               
         }
     }
 }

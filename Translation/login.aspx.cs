@@ -13,20 +13,26 @@ namespace Translation
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            //注销登录状态，清空cookie
+            Authentication.logOut();
         }
         string username;
+        string password;
         protected void login_Click(object sender, EventArgs e)
         {
+            //获取用户名密码
             username = usernameTxt.Text;
-            string sqlStr=$"select count(*) from userinfo where username='{username}' and password='{password.Text}'";
+            password = passwordTxt.Text;
+            string sqlStr=$"select count(*) from userinfo where username='{username}' and password='{password}'";
+            //查询用户名及密码
             if (Convert.ToBoolean(SQLHelper.GetExecuteScalar(sqlStr)))
             {
-                FormsAuthentication.SetAuthCookie(username, false);
-                Label1.Text = $"用户{User.Identity.Name}登录!";
-                Master.UserClass = "show";
-                Master.loginClass = "hidden";
-                Master.UserTxt = User.Identity.Name;
+                //先清空cookie
+                Authentication.logOut();
+                //设置用户信息凭据
+                Authentication.SetCookie(username,password);
+                //跳转至我的项目页
+                Response.Redirect("myProject.aspx");
             }
             else
             {

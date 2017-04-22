@@ -18,6 +18,10 @@ namespace Translation
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            //加载本页时显示当前用户名
+            Master.UserClass = "show";
+            Master.loginClass = "hidden";
+            Master.UserTxt = Authentication.getUserName();
             if (!IsPostBack)
                 Data_Binding();
         }
@@ -53,13 +57,13 @@ namespace Translation
             pd.AllowPaging = true;
             pd.PageSize = 3;
             pd.CurrentPageIndex = CurrentPage;
-            this.Label1.Text = $"当前:{ (CurrentPage + 1).ToString()}/{ pd.PageCount.ToString()}";
-            this.ButtonPrevious.Enabled = !pd.IsFirstPage;
-            this.ButtonNext.Enabled = !pd.IsLastPage;
-            this.Repeaterprojects.DataSource = pd;
-            this.Repeaterprojects.DataBind();
+            Label1.Text = $"当前:{ (CurrentPage + 1).ToString()}/{ pd.PageCount.ToString()}";
+            ButtonPrevious.Enabled = !pd.IsFirstPage;
+            ButtonNext.Enabled = !pd.IsLastPage;
+            Repeaterprojects.DataSource = pd;
+            Repeaterprojects.DataBind();
         }
-
+        //翻页按钮
         protected void ButtonPrevious_Click(object sender, EventArgs e)
         {
             CurrentPage -= 1;

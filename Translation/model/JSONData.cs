@@ -7,15 +7,7 @@ namespace Translation.model
 {
     public class JSONData
     {
-        public string key
-        {
-            get;
-            private set;
-        }
-        public string text
-        {
-            get;
-            private set;
-        }
+        public string key { get; private set; }
+        public string text { get; private set; }
     }
 }

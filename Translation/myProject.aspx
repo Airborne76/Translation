@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/main.Master" AutoEventWireup="true" CodeBehind="myProject.aspx.cs" Inherits="Translation.myProject" %>
-
+<%@ MasterType VirtualPath="~/main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -24,10 +24,10 @@
         </div>
     </div >
     <div class="<%=hasProject("tip") %>">
-        <span>你还没有创建过任何项目</span>
+    <span>你还没有创建过任何项目</span>
     </div>   
     <asp:Label ID="Label2" runat="server" Text="项目名:"></asp:Label>
-    <asp:TextBox ID="ProjectName" runat="server"></asp:TextBox>
+    <asp:TextBox ID="ProjectName" runat="server" autocomplete="off"></asp:TextBox>
     <br />
     <asp:FileUpload ID="FileUpload1" runat="server" />
     <br />

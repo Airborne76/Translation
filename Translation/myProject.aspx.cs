@@ -16,24 +16,19 @@ namespace Translation
         string username;
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (Request.Cookies["username"] == null)
-            //{
-            //    Response.Redirect("login.aspx");
-            //}
-            //else if (!IsPostBack)
-            //{
-            //    username = Request.Cookies["username"].Value;
-            //    usermsg.Text = username;
-            //    Data_Binding();
-            //}
-            username = User.Identity.Name;
+            Master.UserClass = "show";
+            Master.loginClass = "hidden";
+            Master.UserTxt = Authentication.getUserName();
+            username = Authentication.getUserName();
             Data_Binding();
             usermsg.Text = username;
         }
         //显示进度
         public string showRate(string projectId)
         {
+            //所有文本
             string sqlAllStr = $"select count([key])from textinfo left join translation on (translation.textId = textinfo.textId) where projectId = '{projectId}' ";
+            //已翻译文本
             string sqlTranslatedStr = $"select count([key]) from textinfo left join translation on (translation.textId = textinfo.textId) where projectId = '{projectId}' and translatedText is not null";
             string rate = ((double)result(sqlTranslatedStr) / result(sqlAllStr)).ToString("0.00%");
             return rate;
@@ -65,8 +60,8 @@ namespace Translation
         public string hasProject(string element)
         {
             string sqlcount = $"select count(*) from projectinfo where username='{username}'";
-            int i = Convert.ToInt16(SQLHelper.GetExecuteScalar(sqlcount));            
-            if (element=="bind")
+            int i = Convert.ToInt16(SQLHelper.GetExecuteScalar(sqlcount));
+            if (element == "bind")
             {
                 if (i == 0)
                 {
@@ -111,7 +106,7 @@ namespace Translation
             Repeaterprojects.DataSource = pd;
             Repeaterprojects.DataBind();
         }
-
+        //前后翻页按钮
         protected void ButtonPrevious_Click(object sender, EventArgs e)
         {
             CurrentPage -= 1;
@@ -125,33 +120,54 @@ namespace Translation
         }
         protected void upload_Click(object sender, EventArgs e)
         {
-            if (FileUpload1.HasFile)
+            if (ProjectName.Text.Trim() != "")
             {
-                string datetime = "" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second;
-                string filePath = Server.MapPath("File/") + datetime + FileUpload1.FileName;
-                FileUpload1.SaveAs(filePath);
-                string JSONString = fileHelper.FileStreamReader(filePath);
-                string sqlInsert;
-                //JSON反序列化
-                JArray ja = JSONHelper.DeserializeJSON(JSONString);
-                //测试用
-                string s = "";
-                //预留username
-                //projectId以时间+项目名
-                sqlInsert = $"insert into projectinfo(projectId,projectname,username,createtime) values('{datetime + ProjectName.Text}','{ProjectName.Text}','{username}','{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}')";
-                SQLHelper.GetExecuteNonQuery(sqlInsert);
-                for (int i = 0; i < ja.Count; i++)
+                if (FileUpload1.HasFile)
                 {
-                    JObject o = (JObject)ja[i];
-                    //textId以时间+key+顺序i
-                    sqlInsert = $"insert into textinfo(textId,[key],text,projectId) values('{datetime + o["key"].ToString() + i}','{o["key"].ToString()}','{ o["text"].ToString()}','{datetime + ProjectName.Text}')";
-                    SQLHelper.GetExecuteNonQuery(sqlInsert);
-                    s += "KEY:" + o["key"].ToString();
-                    s += "TEXT:" + o["text"].ToString();
+                    try
+                    {
+                        string datetime = "" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second;
+                        string filePath = Server.MapPath("File/") + datetime + FileUpload1.FileName;
+                        FileUpload1.SaveAs(filePath);
+                        string JSONString = fileHelper.FileStreamReader(filePath);
+                        string sqlInsert;
+                        //JSON反序列化
+                        JArray ja = JSONHelper.DeserializeJSON(JSONString);
+                        if (ja != null)
+                        {
+                            string s = "";
+                            //以时间+项目名作为projectId
+                            sqlInsert = $"insert into projectinfo(projectId,projectname,username,createtime) values('{datetime + ProjectName.Text}','{ProjectName.Text}','{username}','{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}')";
+                            SQLHelper.GetExecuteNonQuery(sqlInsert);
+                            for (int i = 0; i < ja.Count; i++)
+                            {
+                                JObject o = (JObject)ja[i];
+                                //以时间+key+顺序i作为textId
+                                sqlInsert = $"insert into textinfo(textId,[key],text,projectId) values('{datetime + o["key"].ToString() + i}','{o["key"].ToString()}','{ o["text"].ToString()}','{datetime + ProjectName.Text}')";
+                                SQLHelper.GetExecuteNonQuery(sqlInsert);
+                                s += "KEY:" + o["key"].ToString();
+                                s += "TEXT:" + o["text"].ToString();
+                            }
+                            usermsg.Text = s;
+                        }
+                        else
+                        {
+                            usermsg.Text = "文件格式错误，请检查上传的文件";
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        usermsg.Text = "文件格式错误，请检查上传的文件";
+                    }
                 }
-
-                usermsg.Text = s;
-
+                else
+                {
+                    usermsg.Text = "请选择要上传的文件";
+                }
+            }
+            else
+            {
+                usermsg.Text = "请输入项目名";
             }
         }
     }

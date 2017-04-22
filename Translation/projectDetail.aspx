@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/main.Master" AutoEventWireup="true" CodeBehind="projectDetail.aspx.cs" Inherits="Translation.projectDetail" %>
-
+<%@ MasterType VirtualPath="~/main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -21,8 +21,8 @@
                     <span><%# Eval("updateTime")%> </span>
                 </div>
                 <div>
-                    <input id="Text1" type="text" />
-                    <input id="Button1" type="button" value="button" onclick="submitText(this)" />
+                    <input id="Text1" type="text" autocomplete="off"/>
+                    <input id="Button1" type="button" value="button"  onclick="submitText(this)" />
                     <span class="hidden"><%# Eval("textId")%></span>
                 </div>
             </div>
@@ -31,19 +31,19 @@
     <%--AJAX测试--%>
     <script>
         function submitText(dom) {
-            var username = getCookie("username");
+            var username="<%=username%>";
             var text = dom.previousSibling.previousSibling.value.replace(/(^\s*)|(\s*$)/g, "");
             var textId = dom.nextSibling.nextSibling.innerHTML;
             var d = new Date();
             var timeNow = d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
             if (text != "") {
+                //调用webservice内的方法
                 Translation.WebService1.Submit(username, text, textId, timeNow, function (result) {
                     if (result == undefined) {
                         console.log("error");
                     } else {
                         showTranslationInfo(dom, result.Username, result.Text, result.Time);
                     }
-                    //console.log(result);
                 }, function () {
                     console.log("error");
                 }
@@ -54,15 +54,7 @@
             }
 
         }
-
-        function getCookie(name) {
-            var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-            if (arr = document.cookie.match(reg))
-                return unescape(arr[2]);
-            else
-                return null;
-        }
-
+        //一些DOM操作
         function showTranslationInfo(dom, username, text, time) {
             var translatedTextElement = dom.parentNode.previousSibling.previousSibling.childNodes[1];
             var usernameElement = translatedTextElement.nextSibling.nextSibling;
@@ -70,6 +62,7 @@
             translatedTextElement.innerHTML = text;
             usernameElement.innerHTML = username;
             updateTimeElement.innerHTML = time;
+            dom.previousSibling.previousSibling.value = "";
         }
     </script>
     <div>
