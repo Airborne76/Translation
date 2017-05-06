@@ -10,6 +10,7 @@
                     <div>
                         <span><%# Eval("projectname") %></span>
                         <span><%# showRate(Eval("projectId").ToString()) %></span>
+                        <input type="button" name="<%# Eval("projectId") %>" value="getFile" onclick="getFile(this)" />
                     </div>
                     <div>
                         <span><%# Eval("createtime")%></span>
@@ -25,7 +26,20 @@
     </div >
     <div class="<%=hasProject("tip") %>">
     <span>你还没有创建过任何项目</span>
-    </div>   
+    </div>
+    <%--AJAX测试--%>
+    <script>
+        function getFile(dom) {
+            var projectId=dom.name;
+            if (projectId!="") {
+                Translation.WebService1.getFile(projectId, function (result) {
+                    console.log(result);
+                }, function () {
+                    console.log("error");
+                });
+            }
+        }
+    </script>
     <asp:Label ID="Label2" runat="server" Text="项目名:"></asp:Label>
     <asp:TextBox ID="ProjectName" runat="server" autocomplete="off"></asp:TextBox>
     <br />

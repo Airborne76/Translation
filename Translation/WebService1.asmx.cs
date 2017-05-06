@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -49,6 +50,44 @@ namespace Translation
                 return null;
             }
         }
+        [WebMethod]
+        public string getFile(string projectId)
+        {
+            string i = "";
+            string sqlSelectStr = $"select [key],text,translatedText from textinfo left join translation on (translation.textId = textinfo.textId) where projectId = '{projectId}' ";
+            List<translatedTextInfo> translation = tabletolist(SQLHelper.GetDataTable(sqlSelectStr));
+            foreach (var item in translation)
+            {
+                i += item.key + " " + item.text + " " + item.translatedText + ";";
+            }
+            return i;
+        }
+        [WebMethod]
+        public string sss(string projectId)
+        {
+            return projectId;
+        }
+        private static List<translatedTextInfo> tabletolist(DataTable dt)
+        {
+            List<translatedTextInfo> translatedTextInfolist = new List<translatedTextInfo>();
+            if (dt.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    translatedTextInfo text = new translatedTextInfo();
+                    text.key = Convert.ToString(dr["key"]);
+                    text.text = Convert.ToString(dr["text"]);
+                    text.translatedText = Convert.ToString(dr["translatedText"]);
+                    translatedTextInfolist.Add(text);
+                }
+                return translatedTextInfolist;
+            }
+            else
+            {
+                return null;
+            }
 
+        }
+       
     }
 }

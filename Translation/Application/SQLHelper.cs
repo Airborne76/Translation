@@ -66,12 +66,8 @@ namespace Translation.Application
             DataTable dt = new DataTable();
             da.Fill(dt);
             CloseConnection();
-            return dt;
-            
+            return dt;            
         }
-
-
-
 
     }
 }
