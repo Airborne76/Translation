@@ -10,34 +10,34 @@
 namespace Translation {
     
     
-    public partial class LoginIn {
+    public partial class managerPage {
         
         /// <summary>
-        /// usernameTxt 控件。
+        /// form1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox usernameTxt;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// passwordTxt 控件。
+        /// ScriptManager1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox passwordTxt;
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
         
         /// <summary>
-        /// login 控件。
+        /// Repeaterprojects 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button login;
+        protected global::System.Web.UI.WebControls.Repeater Repeaterprojects;
         
         /// <summary>
         /// Label1 控件。
@@ -49,15 +49,21 @@ namespace Translation {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// Master 属性。
+        /// ButtonPrevious 控件。
         /// </summary>
         /// <remarks>
-        /// 自动生成的属性。
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        public new Translation.main Master {
-            get {
-                return ((Translation.main)(base.Master));
-            }
-        }
+        protected global::System.Web.UI.WebControls.Button ButtonPrevious;
+        
+        /// <summary>
+        /// ButtonNext 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonNext;
     }
 }

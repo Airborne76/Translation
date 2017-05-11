@@ -23,16 +23,30 @@ namespace Translation
             //获取用户名密码
             username = usernameTxt.Text;
             password = passwordTxt.Text;
-            string sqlStr=$"select count(*) from userinfo where username='{username}' and password='{password}'";
+            string sqlStr = $"select count(*) from userinfo where username='{username}' and password='{password}'";
             //查询用户名及密码
             if (Convert.ToBoolean(SQLHelper.GetExecuteScalar(sqlStr)))
             {
-                //先清空cookie
-                Authentication.logOut();
-                //设置用户信息凭据
-                Authentication.SetCookie(username,password);
-                //跳转至我的项目页
-                Response.Redirect("myProject.aspx");
+                string sqlStrRights = $"select rights from userinfo where username='{username}'";
+                if (Convert.ToString(SQLHelper.GetExecuteScalar(sqlStrRights)) == "admin")
+                {
+                    Label1.Text = "admin!";
+                    Authentication.logOut();
+                    //设置用户信息凭据
+                    Authentication.SetCookie(username, password);
+                    //跳转至我的项目页
+                    Response.Redirect("managerPage.aspx");
+                }
+                else
+                {
+                    //先清空cookie
+                    Authentication.logOut();
+                    //设置用户信息凭据
+                    Authentication.SetCookie(username, password);
+                    //跳转至我的项目页
+                    Response.Redirect("myProject.aspx");
+                }
+
             }
             else
             {

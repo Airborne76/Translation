@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using Translation.model;
 
 namespace Translation.Application
 {
@@ -23,6 +25,10 @@ namespace Translation.Application
 
                 return null;
             }               
+        }
+        public static string SerializeJSON(List<translatedTextInfo> translatedTextInfolist)
+        {
+            return JsonConvert.SerializeObject(translatedTextInfolist);
         }
     }
 }

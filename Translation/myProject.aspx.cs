@@ -16,13 +16,18 @@ namespace Translation
         string username;
         protected void Page_Load(object sender, EventArgs e)
         {
-            Master.UserClass = "show";
+            Master.UserClass = "show col-md-3";
             Master.loginClass = "hidden";
             Master.UserTxt = Authentication.getUserName();
             username = Authentication.getUserName();
             Data_Binding();
-            usermsg.Text = username;
+            //usermsg.Text = username;
         }
+        public string getUsername()
+        {
+            return username;
+        }
+
         //显示进度
         public string showRate(string projectId)
         {
@@ -127,7 +132,7 @@ namespace Translation
                     try
                     {
                         string datetime = "" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second;
-                        string filePath = Server.MapPath("File/") + datetime + FileUpload1.FileName;
+                        string filePath = Server.MapPath("UploadFile/") + datetime + FileUpload1.FileName;
                         FileUpload1.SaveAs(filePath);
                         string JSONString = fileHelper.FileStreamReader(filePath);
                         string sqlInsert;
@@ -135,7 +140,7 @@ namespace Translation
                         JArray ja = JSONHelper.DeserializeJSON(JSONString);
                         if (ja != null)
                         {
-                            string s = "";
+                            //string s = "";
                             //以时间+项目名作为projectId
                             sqlInsert = $"insert into projectinfo(projectId,projectname,username,createtime) values('{datetime + ProjectName.Text}','{ProjectName.Text}','{username}','{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}')";
                             SQLHelper.GetExecuteNonQuery(sqlInsert);
@@ -145,10 +150,11 @@ namespace Translation
                                 //以时间+key+顺序i作为textId
                                 sqlInsert = $"insert into textinfo(textId,[key],text,projectId) values('{datetime + o["key"].ToString() + i}','{o["key"].ToString()}','{ o["text"].ToString()}','{datetime + ProjectName.Text}')";
                                 SQLHelper.GetExecuteNonQuery(sqlInsert);
-                                s += "KEY:" + o["key"].ToString();
-                                s += "TEXT:" + o["text"].ToString();
+                               // s += "KEY:" + o["key"].ToString();
+                                //s += "TEXT:" + o["text"].ToString();
                             }
-                            usermsg.Text = s;
+                           // usermsg.Text = s;
+                            Response.AddHeader("Refresh", "0");
                         }
                         else
                         {

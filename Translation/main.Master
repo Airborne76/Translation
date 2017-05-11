@@ -6,23 +6,10 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
+    <script src="Scripts/jquery-3.1.1.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
     <style type="text/css">
-        table{
-            border:2px solid aqua;
-            border-collapse:collapse;
-        }
-        th,td{
-            border:1px solid aqua;
-        }
-        .textBlock{
-            border:1px solid grey;
-        }
-        .hidden{
-            display:none;
-        }
-        .show{
-            display:inline-block;
-        }
     </style>
 
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -36,16 +23,15 @@
             </Services>
         </asp:ScriptManager>
         <div>
-            <div>
-                <a runat="server" href="~/projectView.aspx">项目浏览</a>
-                <a runat="server" href="~/myProject.aspx">我的项目</a>
-                <asp:HyperLink ID="login" runat="server" NavigateUrl="~/login.aspx">登录</asp:HyperLink>
-                <asp:Label ID="user" runat="server" Text=""></asp:Label>
-                <a runat="server" href="~/register.aspx">注册</a>
+            <div class="row show-grid">
+                <a class="col-md-3 bg-info" runat="server" href="~/projectView.aspx">项目浏览</a>
+                <a class="col-md-3 bg-info" runat="server" href="~/myProject.aspx">我的项目</a>
+                <asp:HyperLink ID="login" runat="server" NavigateUrl="~/login.aspx" CssClass="col-md-3 bg-info">登录</asp:HyperLink>
+                <asp:Label ID="user" runat="server" Text="" CssClass="col-md-3 bg-info"></asp:Label>
+                <a class="col-md-3 bg-info" runat="server" href="~/register.aspx">注册</a>
             </div>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
-
         </div>
     </form>
 </body>

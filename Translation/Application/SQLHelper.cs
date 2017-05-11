@@ -49,6 +49,7 @@ namespace Translation.Application
         //查询数据库,返回返回个数(用于insert,update,delete)
         public static int GetExecuteNonQuery(string sqlStr)
         {
+           // sqlStr = sqlStr.Replace("'","\"\"");
             OpenConnection();
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = sqlStr;

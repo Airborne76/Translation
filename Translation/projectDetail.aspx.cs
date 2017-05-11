@@ -17,12 +17,24 @@ namespace Translation
         protected void Page_Load(object sender, EventArgs e)
         {
             username = Authentication.getUserName();
-            Master.UserClass = "show";
+            Master.UserClass = "show col-md-3";
             Master.loginClass = "hidden";
             Master.UserTxt = Authentication.getUserName();
             projectId = Request.QueryString["projectId"];
             if (!IsPostBack)
                 Data_Binding();
+        }
+        public string hasText(string text)
+        {
+            if (text!="")
+            {
+                return "well well-sm show";
+            }
+            else
+            {
+                return "well well-sm hidden";
+            }
+            
         }
         private int CurrentPage
         {
@@ -59,7 +71,7 @@ namespace Translation
             }
             pd.DataSource = ((DataTable)ViewState["DataSource"]).DefaultView;
             pd.AllowPaging = true;
-            pd.PageSize = 3;
+            pd.PageSize = 20;
             pd.CurrentPageIndex = CurrentPage;
             Label1.Text = $"当前:{ (CurrentPage + 1).ToString()}/{ pd.PageCount.ToString()}";
             ButtonPrevious.Enabled = !pd.IsFirstPage;

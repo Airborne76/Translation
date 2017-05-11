@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -53,19 +54,41 @@ namespace Translation
         [WebMethod]
         public string getFile(string projectId)
         {
-            string i = "";
+            //string i = "";
             string sqlSelectStr = $"select [key],text,translatedText from textinfo left join translation on (translation.textId = textinfo.textId) where projectId = '{projectId}' ";
             List<translatedTextInfo> translation = tabletolist(SQLHelper.GetDataTable(sqlSelectStr));
-            foreach (var item in translation)
+            if (!File.Exists(Server.MapPath("DownloadFile/") + projectId + ".json"))
             {
-                i += item.key + " " + item.text + " " + item.translatedText + ";";
+                FileStream fs1 = new FileStream(Server.MapPath("DownloadFile/") + projectId + ".json", FileMode.Create, FileAccess.Write);
+                StreamWriter sw = new StreamWriter(fs1);
+                sw.WriteLine(JSONHelper.SerializeJSON(translation));
+                sw.Close();
+                fs1.Close();
+
             }
-            return i;
+            else
+            {
+                FileStream fs = new FileStream(Server.MapPath("DownloadFile/") + projectId + ".json", FileMode.Open, FileAccess.Write);
+                fs.SetLength(0);
+                StreamWriter sr = new StreamWriter(fs);
+                sr.WriteLine(JSONHelper.SerializeJSON(translation));
+                sr.Close();
+                fs.Close();
+            }
+            return projectId;
         }
         [WebMethod]
-        public string sss(string projectId)
+        public string deleteUser(string username)
         {
-            return projectId;
+            string sqlDelete = $"delete from userinfo where username='{username}'";
+            if (SQLHelper.GetExecuteNonQuery(sqlDelete)!=0)
+            {
+                return username;
+            }
+            else
+            {
+                return null;
+            }
         }
         private static List<translatedTextInfo> tabletolist(DataTable dt)
         {
@@ -88,6 +111,6 @@ namespace Translation
             }
 
         }
-       
+
     }
 }

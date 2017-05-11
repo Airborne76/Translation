@@ -1,28 +1,27 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/main.Master" AutoEventWireup="true" CodeBehind="projectDetail.aspx.cs" Inherits="Translation.projectDetail" %>
+
 <%@ MasterType VirtualPath="~/main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:Repeater ID="Repeaterprojects" runat="server">
         <ItemTemplate>
-            <div class="textBlock">
-                <div>
-
-                    <span>key:</span>
-                    <span><%# Eval("key") %></span>
+            <div class="well">
+                <div class="well well-sm">
+                    <div>
+                        <h5><i><%# Eval("key") %></i></h5>
+                    </div>
+                    <div>
+                        <h3><%# Eval("text") %></h3>
+                    </div>
                 </div>
-                <div>
-                    <span>text:</span>
-                    <span><%# Eval("text") %></span>
-                </div>
-                <div>
-                    <span><%# Eval("translatedText")%></span>
-                    <span><%# Eval("username")%></span>
-                    <span><%# Eval("updateTime")%> </span>
-                </div>
-                <div>
-                    <input id="Text1" type="text" autocomplete="off"/>
-                    <input id="Button1" type="button" value="button"  onclick="submitText(this)" />
+                <div class="<%# hasText(Eval("translatedText").ToString()) %>"">
+                    <h5><%# Eval("username")%>于<%# Eval("updateTime")%></h5>
+                    <div class="alert alert-success" role="alert"><h4><%# Eval("translatedText")%></h4></div>
+                </div>                
+                <div class="form-group">
+                    <input id="Text1" type="text" autocomplete="off" class="form-control" placeholder="text"/>
+                    <input id="Button1" type="button" value="提交" class="btn btn-success" onclick="submitText(this)" />
                     <span class="hidden"><%# Eval("textId")%></span>
                 </div>
             </div>
@@ -31,7 +30,7 @@
     <%--AJAX测试--%>
     <script>
         function submitText(dom) {
-            var username="<%=username%>";
+            var username = "<%=username%>";
             var text = dom.previousSibling.previousSibling.value.replace(/(^\s*)|(\s*$)/g, "");
             var textId = dom.nextSibling.nextSibling.innerHTML;
             var d = new Date();
@@ -56,18 +55,17 @@
         }
         //一些DOM操作
         function showTranslationInfo(dom, username, text, time) {
-            var translatedTextElement = dom.parentNode.previousSibling.previousSibling.childNodes[1];
-            var usernameElement = translatedTextElement.nextSibling.nextSibling;
-            var updateTimeElement = usernameElement.nextSibling.nextSibling;
+            var userinfoElement = dom.parentNode.previousSibling.previousSibling.childNodes[1];
+            var translatedTextElement = userinfoElement.nextSibling.nextSibling.childNodes[0];
             translatedTextElement.innerHTML = text;
-            usernameElement.innerHTML = username;
-            updateTimeElement.innerHTML = time;
+            userinfoElement.innerHTML = username + "于" + time;
+            userinfoElement.parentNode.setAttribute("class", "well well-sm show");
             dom.previousSibling.previousSibling.value = "";
         }
     </script>
     <div>
         <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
-        <asp:Button ID="ButtonPrevious" runat="server" Text="后一页" OnClick="ButtonPrevious_Click" />
-        <asp:Button ID="ButtonNext" runat="server" Text="前一页" OnClick="ButtonNext_Click" />
+        <asp:Button ID="ButtonPrevious" runat="server" Text="上一页" OnClick="ButtonPrevious_Click" />
+        <asp:Button ID="ButtonNext" runat="server" Text="下一页" OnClick="ButtonNext_Click" />
     </div>
 </asp:Content>

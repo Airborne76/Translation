@@ -9,23 +9,13 @@ using Translation.Application;
 
 namespace Translation
 {
-    public partial class projectView : System.Web.UI.Page
+    public partial class managerPage : System.Web.UI.Page
     {
-        public string getUrl(string projectId)
-        {
-            return $"projectDetail.aspx?projectId={projectId }";
-
-        }
         protected void Page_Load(object sender, EventArgs e)
         {
-            //加载本页时显示当前用户名
-            Master.UserClass = "show col-md-3";
-            Master.loginClass = "hidden";
-            Master.UserTxt = Authentication.getUserName();
             if (!IsPostBack)
                 Data_Binding();
         }
-        //当前分页索引
         private int CurrentPage
         {
             get
@@ -44,13 +34,12 @@ namespace Translation
                 this.ViewState["CurrentPage"] = value;
             }
         }
-        //数据绑定
         private void Data_Binding()
         {
             PagedDataSource pd = new PagedDataSource();
             if (ViewState["DataSource"] == null)
             {
-                string sql = "select projectId,projectname,username,createtime from projectinfo";
+                string sql = "select username from userinfo where rights is null";
                 ViewState["DataSource"] = SQLHelper.GetDataTable(sql);
             }
             pd.DataSource = ((DataTable)ViewState["DataSource"]).DefaultView;
