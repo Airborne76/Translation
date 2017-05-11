@@ -57,6 +57,7 @@ namespace Translation
             //string i = "";
             string sqlSelectStr = $"select [key],text,translatedText from textinfo left join translation on (translation.textId = textinfo.textId) where projectId = '{projectId}' ";
             List<translatedTextInfo> translation = tabletolist(SQLHelper.GetDataTable(sqlSelectStr));
+            //若不存在该文件则创建
             if (!File.Exists(Server.MapPath("DownloadFile/") + projectId + ".json"))
             {
                 FileStream fs1 = new FileStream(Server.MapPath("DownloadFile/") + projectId + ".json", FileMode.Create, FileAccess.Write);
@@ -66,6 +67,7 @@ namespace Translation
                 fs1.Close();
 
             }
+            //若存在则重新写入
             else
             {
                 FileStream fs = new FileStream(Server.MapPath("DownloadFile/") + projectId + ".json", FileMode.Open, FileAccess.Write);

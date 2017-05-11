@@ -142,7 +142,7 @@ namespace Translation
                         {
                             //string s = "";
                             //以时间+项目名作为projectId
-                            sqlInsert = $"insert into projectinfo(projectId,projectname,username,createtime) values('{datetime + ProjectName.Text}','{ProjectName.Text}','{username}','{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}')";
+                            sqlInsert = $"insert into projectinfo(projectId,projectname,username,createtime) values('{datetime + ProjectName.Text}','{ProjectName.Text}','{username}','{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day} {DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second}')";
                             SQLHelper.GetExecuteNonQuery(sqlInsert);
                             for (int i = 0; i < ja.Count; i++)
                             {
@@ -175,6 +175,12 @@ namespace Translation
             {
                 usermsg.Text = "请输入项目名";
             }
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Authentication.logOut();
+            Response.Redirect("login.aspx");
         }
     }
 }

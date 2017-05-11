@@ -4,6 +4,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:Button ID="Button1" runat="server" Text="退出" CssClass="btn btn-warning pull-right" OnClick="Button1_Click" />
     <h2><%= getUsername()%>的项目</h2>
     <br />
     <div class="<%=hasProject("bind") %>">
