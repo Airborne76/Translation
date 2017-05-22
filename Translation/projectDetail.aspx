@@ -4,6 +4,11 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <strong class="text-left">贡献者：<%foreach (var member in GetMembers())
+                                 {
+                                     Response.Write(member.username+"（"+member.translationnumber+"）");
+                                     Response.Write("&nbsp;&nbsp;&nbsp;");
+                                 }%></strong>
     <asp:Repeater ID="Repeaterprojects" runat="server">
         <ItemTemplate>
             <div class="well">

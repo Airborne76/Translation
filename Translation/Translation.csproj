@@ -109,12 +109,15 @@
     <AdditionalFiles Include="register.aspx" />
     <Content Include="projectDetail.aspx" />
     <Content Include="projectView.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\Authentication.cs" />
     <Compile Include="Application\fileHelper.cs" />
     <Compile Include="Application\JSONHelper.cs" />
+    <Compile Include="Application\MD5Helper.cs" />
     <Compile Include="Application\SQLHelper.cs" />
     <Compile Include="login.aspx.cs">
       <DependentUpon>login.aspx</DependentUpon>
@@ -138,6 +141,7 @@
       <DependentUpon>managerPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="model\JSONData.cs" />
+    <Compile Include="model\member.cs" />
     <Compile Include="model\translatedTextInfo.cs" />
     <Compile Include="model\translationInfo.cs" />
     <Compile Include="myProject.aspx.cs">
@@ -177,6 +181,7 @@
   <ItemGroup>
     <Folder Include="DB\" />
     <Folder Include="DownloadFile\" />
+    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="UploadFile\" />
   </ItemGroup>
   <ItemGroup>

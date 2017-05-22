@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Translation.Application;
+using Translation.model;
 
 namespace Translation
 {
@@ -53,6 +54,31 @@ namespace Translation
             {
                 this.ViewState["CurrentPage"] = value;
             }
+        }
+        private List<member> datatabletolist(DataTable dt)
+        {
+            List<member> members = new List<member>();
+            if (dt.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    member m = new member();
+                    m.username = Convert.ToString(dr["username"]);
+                    m.translationnumber = Convert.ToInt16(dr[0]);
+                    members.Add(m);
+                }
+                return members;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public List<member> GetMembers()
+        {
+            string sql = $"select count(textId),username from translation where textId in(select textId from textinfo where projectId='{projectId}') group by username ";
+            List<member> memberlist = datatabletolist(SQLHelper.GetDataTable(sql));
+            return memberlist;
         }
         private void Data_Binding()
         {

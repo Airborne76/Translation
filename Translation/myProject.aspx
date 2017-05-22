@@ -28,7 +28,7 @@
                                 <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%# showRate(Eval("projectId").ToString()) %>;">
                                     <%# showRate(Eval("projectId").ToString()) %>
                                 </div>
-                            </div>                           
+                            </div>
                         </div>
                     </td>
                     <td>
@@ -75,12 +75,12 @@
     <h3>上传新项目</h3>
     <div class="row">
         <div class="col-lg-3">
-      <div class="input-group">
+            <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">项目名</span>
                 <asp:TextBox CssClass="form-control" ID="ProjectName" runat="server" placeholder="ProjectName" aria-describedby="basic-addon1" autocomplete="off"></asp:TextBox>
-      </div>
             </div>
         </div>
+    </div>
     <br />
     <asp:FileUpload ID="FileUpload1" runat="server" />
     <br />

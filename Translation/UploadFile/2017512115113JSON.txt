@@ -13,7 +13,7 @@
 {"key":"menu_controls_element_2_6","text":"TAB - alternate Map and Inventory"},
 {"key":"menu_controls_element_2_7","text":"SPACE - take ALL when LOOT window is up"},
 {"key":"menu_controls_element_2_8","text":"C - Character (hero) panel details"},
-{"key":"menu_transfer_saves_to_steam","text":"We've enabled Steam Cloud saves. Your save files have moved to your Steam user directory."},
+{"key":"menu_transfer_saves_to_steam","text":"We have enabled Steam Cloud saves. Your save files have moved to your Steam user directory."},
 {"key":"menu_transfer_and_enable_steam_files","text":"Ok"},
 {"key":"options_category_audio","text":"Audio"},
 {"key":"options_category_graphics","text":"Graphics"},

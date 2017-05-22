@@ -34,7 +34,7 @@ namespace Translation
                     Authentication.logOut();
                     //设置用户信息凭据
                     Authentication.SetCookie(username, password);
-                    //跳转至我的项目页
+                    //跳转至管理页
                     Response.Redirect("managerPage.aspx");
                 }
                 else
