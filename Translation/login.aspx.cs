@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
@@ -15,7 +17,15 @@ namespace Translation
         {
             //注销登录状态，清空cookie
             Authentication.logOut();
+            //测试资源文件
+            var i = Resources.ResourceCN.l01;
         }
+        protected override void InitializeCulture()
+        {
+            Page.UICulture = "en-US";
+            base.InitializeCulture();
+        }
+
         string username;
         string password;
         protected void login_Click(object sender, EventArgs e)

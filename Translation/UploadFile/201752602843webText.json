@@ -1,0 +1,134 @@
+﻿[
+  {
+    "key": "login_title_0",
+    "text": "Sign in"
+  },
+  {
+    "key": "login_username_0",
+    "text": "Username"
+  },
+  {
+    "key": "login_password_0",
+    "text": "Password"
+  },
+  {
+    "key": "login_submit_0",
+    "text": "Submit"
+  },
+  {
+    "key": "main_browse_0",
+    "text": "Browse Projects"
+  },
+  {
+    "key": "main_myproject_0",
+    "text": "My project"
+  },
+  {
+    "key": "main_login_0",
+    "text": "Sign in"
+  },
+  {
+    "key": "main_register_0",
+    "text": "Register"
+  },
+  {
+    "key": "myproject_table_0",
+    "text": "Project Name"
+  },
+  {
+    "key": "myproject_table_1",
+    "text": "Create Time"
+  },
+  {
+    "key": "myproject_table_2",
+    "text": "Download JSON file"
+  },
+  {
+    "key": "myproject_download_0",
+    "text": "Download"
+  },
+  {
+    "key": "myproject_previous_0",
+    "text": "Previous Page"
+  },
+  {
+    "key": "myproject_next_0",
+    "text": "Next Page"
+  },
+  {
+    "key": "myproject_noproject_0",
+    "text": "You have not create any project"
+  },
+  {
+    "key": "myproject_upload_0",
+    "text": "Upload new project"
+  },
+  {
+    "key": "myproject_projectname_0",
+    "text": "Project name"
+  },
+  {
+    "key": "myproject_introduce_0",
+    "text": "Project introduce(under 500 words)"
+  },
+  {
+    "key": "myproject_uploadfile_0",
+    "text": "Upload File"
+  },
+  {
+    "key": "projectdetail_submit_0",
+    "text": "Submit"
+  },
+  {
+    "key": "projectdetail_previous_0",
+    "text": "Previous Page"
+  },
+  {
+    "key": "projectdetail_next_0",
+    "text": "Next Page"
+  },
+  {
+    "key": "projectview_title_0",
+    "text": "Browse Projects"
+  },
+  {
+    "key": "projectview_table_0",
+    "text": "Project Name"
+  },
+  {
+    "key": "projectview_table_1",
+    "text": "Createor"
+  },
+  {
+    "key": "projectview_table_2",
+    "text": "Create time"
+  },
+  {
+    "key": "projectview_previous_0",
+    "text": "Previous Page"
+  },
+  {
+    "key": "projectview_next_0",
+    "text": "Next Page"
+  },
+  {
+    "key": "register_title_0",
+    "text": "Create new account"
+  },
+  {
+    "key": "register_username_0",
+    "text": "Username"
+  },
+  {
+    "key": "register_password_0",
+    "text": "Password"
+  },
+  {
+    "key": "register_confirmpassword_0",
+    "text": "Confirm password"
+  },
+  {
+    "key": "register_register_0",
+    "text": "Register"
+  }
+]

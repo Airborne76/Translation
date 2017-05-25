@@ -4,11 +4,26 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <strong class="text-left">贡献者：<%foreach (var member in GetMembers())
-                                 {
-                                     Response.Write(member.username+"（"+member.translationnumber+"）");
-                                     Response.Write("&nbsp;&nbsp;&nbsp;");
-                                 }%></strong>
+<h3>来自创建者<%=GetCreatorMessage().Rows[0][0] %></h3>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <%=GetCreatorMessage().Rows[0][1] %>
+        </div>
+    </div>
+    
+    <strong class="text-left">贡献者：<% if (GetMembers() != null)
+                                      {
+                                          foreach (var member in GetMembers())
+                                          {
+                                              Response.Write(member.username + "（" + member.translationnumber + "）");
+                                              Response.Write("&nbsp;&nbsp;&nbsp;");
+                                          }
+                                      }
+                                      else
+                                      {
+                                          Response.Write("无");
+                                      }
+                                      %></strong>
     <asp:Repeater ID="Repeaterprojects" runat="server">
         <ItemTemplate>
             <div class="well">
@@ -26,7 +41,7 @@
                 </div>                
                 <div class="form-group">
                     <input id="Text1" type="text" autocomplete="off" class="form-control" placeholder="text"/>
-                    <input id="Button1" type="button" value="提交" class="btn btn-success" onclick="submitText(this)" />
+                    <input id="Button1" type="button" value="projectdetail_submit_0" class="btn btn-success valueTranslate" onclick="submitText(this)" />
                     <span class="hidden"><%# Eval("textId")%></span>
                 </div>
             </div>
@@ -70,7 +85,7 @@
     </script>
     <div>
         <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
-        <asp:Button ID="ButtonPrevious" runat="server" Text="上一页" OnClick="ButtonPrevious_Click" />
-        <asp:Button ID="ButtonNext" runat="server" Text="下一页" OnClick="ButtonNext_Click" />
+        <asp:Button ID="ButtonPrevious" runat="server" CssClass="valueTranslate" Text="projectdetail_previous_0" OnClick="ButtonPrevious_Click" />
+        <asp:Button ID="ButtonNext" runat="server" CssClass="valueTranslate" Text="projectdetail_next_0" OnClick="ButtonNext_Click" />
     </div>
 </asp:Content>

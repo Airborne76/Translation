@@ -8,10 +8,11 @@
     <title></title>
     <script src="Scripts/jquery-3.1.1.min.js"></script>
     <script src="Scripts/bootstrap.min.js"></script>
+    <script src="Scripts/ProjectTranslation-ENtoCN.js"></script>
+    <script src="Scripts/languageControl.js"></script>
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
     <style type="text/css">
     </style>
-
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -24,12 +25,65 @@
         </asp:ScriptManager>
         <div>
             <div class="row show-grid">
-                <a class="col-md-3 bg-info" runat="server" href="~/projectView.aspx">项目浏览</a>
-                <a class="col-md-3 bg-info" runat="server" href="~/myProject.aspx">我的项目</a>
-                <asp:HyperLink ID="login" runat="server" NavigateUrl="~/login.aspx" CssClass="col-md-3 bg-info">登录</asp:HyperLink>
+                <a class="col-md-3 bg-info innerTranslate" runat="server" href="~/projectView.aspx">main_browse_0</a>
+                <a class="col-md-3 bg-info innerTranslate" runat="server" href="~/myProject.aspx">main_myproject_0</a>
+                <asp:HyperLink ID="login" runat="server" NavigateUrl="~/login.aspx" CssClass="col-md-3 bg-info innerTranslate">main_login_0</asp:HyperLink>
                 <asp:Label ID="user" runat="server" Text="" CssClass="col-md-3 bg-info"></asp:Label>
-                <a class="col-md-3 bg-info" runat="server" href="~/register.aspx">注册</a>
+                <a class="col-md-3 bg-info innerTranslate" runat="server" href="~/register.aspx">main_register_0</a>
             </div>
+            <div class="dropdown pull-right">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    language
+    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li><a href="#" onclick="setCookie('language','CN')">简体中文</a></li>
+                    <li><a href="#" onclick="setCookie('language','EN')">English</a></li>
+                </ul>
+            </div>
+            <script>               
+                function setCookie(c_name, value, expiredays) {
+                    var exdate = new Date()
+                    exdate.setDate(exdate.getDate() + expiredays)
+                    document.cookie = c_name + "=" + escape(value) +
+                    ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString())
+                    if (value=="CN") {
+                        document.getElementById("dropdownMenu1").innerHTML = "简体中文<span class='caret'></span>";
+                        location.reload();
+                    }
+                    else {
+                        document.getElementById("dropdownMenu1").innerHTML = "English<span class='caret'></span>";
+                        location.reload();
+                    }
+                }
+               document.ready = function () {
+                    
+                    if (getLanguageCookie("language") == "CN") {
+                        document.getElementById("dropdownMenu1").innerHTML = "简体中文<span class='caret'></span>";
+                        translate("translatedText");
+                    }
+                    else if (getLanguageCookie("language") == "EN") {
+                        document.getElementById("dropdownMenu1").innerHTML = "English<span class='caret'></span>";
+                        translate("text");
+                    }
+                    else {
+                        document.getElementById("dropdownMenu1").innerHTML = getLanguageCookie("language");
+                        translate("text");
+                    }
+                }
+                function getLanguageCookie(c_name) {
+                    if (document.cookie.length > 0) {
+                        c_start = document.cookie.indexOf(c_name + "=")
+                        if (c_start != -1) {
+                            c_start = c_start + c_name.length + 1
+                            c_end = document.cookie.indexOf(";", c_start)
+                            if (c_end == -1) c_end = document.cookie.length
+                            return unescape(document.cookie.substring(c_start, c_end))
+                        }
+                    }
+                    return "language<span class='caret'></span>"
+                }
+            </script>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </div>

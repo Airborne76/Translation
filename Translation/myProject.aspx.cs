@@ -8,6 +8,7 @@ using Translation.Application;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Data;
+using System.Resources;
 
 namespace Translation
 {
@@ -125,50 +126,58 @@ namespace Translation
         }
         protected void upload_Click(object sender, EventArgs e)
         {
+            var message = TextArea1.InnerText;
             if (ProjectName.Text.Trim() != "")
             {
-                if (FileUpload1.HasFile)
+                if (message.Length < 500)
                 {
-                    try
+                    if (FileUpload1.HasFile)
                     {
-                        string datetime = "" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second;
-                        string filePath = Server.MapPath("UploadFile/") + datetime + FileUpload1.FileName;
-                        FileUpload1.SaveAs(filePath);
-                        string JSONString = fileHelper.FileStreamReader(filePath);
-                        string sqlInsert;
-                        //JSON反序列化
-                        JArray ja = JSONHelper.DeserializeJSON(JSONString);
-                        if (ja != null)
+                        try
                         {
-                            //string s = "";
-                            //以时间+项目名作为projectId
-                            sqlInsert = $"insert into projectinfo(projectId,projectname,username,createtime) values('{datetime + ProjectName.Text}','{ProjectName.Text}','{username}','{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day} {DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second}')";
-                            SQLHelper.GetExecuteNonQuery(sqlInsert);
-                            for (int i = 0; i < ja.Count; i++)
+                            string datetime = "" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second;
+                            string filePath = Server.MapPath("UploadFile/") + datetime + FileUpload1.FileName;
+                            FileUpload1.SaveAs(filePath);
+                            string JSONString = fileHelper.FileStreamReader(filePath);
+                            string sqlInsert;
+                            //JSON反序列化
+                            JArray ja = JSONHelper.DeserializeJSON(JSONString);
+                            if (ja != null)
                             {
-                                JObject o = (JObject)ja[i];
-                                //以时间+key+顺序i作为textId
-                                sqlInsert = $"insert into textinfo(textId,[key],text,projectId) values('{datetime + o["key"].ToString() + i}','{o["key"].ToString()}','{ o["text"].ToString()}','{datetime + ProjectName.Text}')";
+                                //string s = "";
+                                //以时间+项目名作为projectId
+                                sqlInsert = $"insert into projectinfo(projectId,projectname,username,createtime,message) values('{datetime + ProjectName.Text}','{ProjectName.Text}','{username}','{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day} {DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second}','{message}')";
                                 SQLHelper.GetExecuteNonQuery(sqlInsert);
-                               // s += "KEY:" + o["key"].ToString();
-                                //s += "TEXT:" + o["text"].ToString();
+                                for (int i = 0; i < ja.Count; i++)
+                                {
+                                    JObject o = (JObject)ja[i];
+                                    //以时间+key+顺序i作为textId
+                                    sqlInsert = $"insert into textinfo(textId,[key],text,projectId) values('{datetime + o["key"].ToString() + i}','{o["key"].ToString()}','{ o["text"].ToString()}','{datetime + ProjectName.Text}')";
+                                    SQLHelper.GetExecuteNonQuery(sqlInsert);
+                                    // s += "KEY:" + o["key"].ToString();
+                                    //s += "TEXT:" + o["text"].ToString();
+                                }
+                                // usermsg.Text = s;
+                                Response.AddHeader("Refresh", "0");
                             }
-                           // usermsg.Text = s;
-                            Response.AddHeader("Refresh", "0");
+                            else
+                            {
+                                usermsg.Text = "文件格式错误，请检查上传的文件";
+                            }
                         }
-                        else
+                        catch (Exception)
                         {
                             usermsg.Text = "文件格式错误，请检查上传的文件";
                         }
                     }
-                    catch (Exception)
+                    else
                     {
-                        usermsg.Text = "文件格式错误，请检查上传的文件";
+                        usermsg.Text = "请选择要上传的文件";
                     }
                 }
                 else
                 {
-                    usermsg.Text = "请选择要上传的文件";
+                    usermsg.Text = "项目介绍应小于500字";
                 }
             }
             else

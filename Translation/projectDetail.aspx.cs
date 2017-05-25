@@ -77,8 +77,13 @@ namespace Translation
         public List<member> GetMembers()
         {
             string sql = $"select count(textId),username from translation where textId in(select textId from textinfo where projectId='{projectId}') group by username ";
-            List<member> memberlist = datatabletolist(SQLHelper.GetDataTable(sql));
-            return memberlist;
+            return datatabletolist(SQLHelper.GetDataTable(sql));
+           
+        }
+        public DataTable GetCreatorMessage()
+        {
+            string sql = $"select username,message from projectinfo where projectId='{projectId}'";
+            return SQLHelper.GetDataTable(sql);
         }
         private void Data_Binding()
         {

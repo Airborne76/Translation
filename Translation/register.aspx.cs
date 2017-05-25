@@ -27,28 +27,35 @@ namespace Translation
             passwordTxt2 = password2.Text;
             if (usernameTxt.Trim() != "" && passwordTxt1.Trim() != "" & passwordTxt2.Trim() != "")
             {
-                string sqlInsertStr = "insert into userinfo(username,password)";
-                sqlInsertStr += $"values('{ usernameTxt }','{ passwordTxt1 }')";
-                //C#6语法中的字符串格式化
-                string sqlSelectStr = $"select count(*) from userinfo where username='{usernameTxt}'";
-
-                if (passwordTxt1 == passwordTxt2)
+                if (usernameTxt.Trim().Length < 10 && passwordTxt1.Trim().Length < 10 && passwordTxt2.Trim().Length < 10)
                 {
-                    //插入一条用户数据
-                    if (Convert.ToInt16(SQLHelper.GetExecuteScalar(sqlSelectStr)) == 0)
+                    string sqlInsertStr = "insert into userinfo(username,password)";
+                    sqlInsertStr += $"values('{ usernameTxt }','{ passwordTxt1 }')";
+                    //C#6语法中的字符串格式化
+                    string sqlSelectStr = $"select count(*) from userinfo where username='{usernameTxt}'";
+
+                    if (passwordTxt1 == passwordTxt2)
                     {
-                        SQLHelper.GetExecuteNonQuery(sqlInsertStr);
-                        //跳转至登录页
-                        Response.Redirect("login.aspx");
+                        //插入一条用户数据
+                        if (Convert.ToInt16(SQLHelper.GetExecuteScalar(sqlSelectStr)) == 0)
+                        {
+                            SQLHelper.GetExecuteNonQuery(sqlInsertStr);
+                            //跳转至登录页
+                            Response.Redirect("login.aspx");
+                        }
+                        else
+                        {
+                            Label4.Text = "用户名已存在";
+                        }
                     }
                     else
                     {
-                        Label4.Text = "用户名已存在";
+                        Label4.Text = "密码输入不一致！";
                     }
                 }
                 else
                 {
-                    Label4.Text = "密码输入不一致！";
+                    Label4.Text = "用户名或密码长度应小于10";
                 }
             }
             else
